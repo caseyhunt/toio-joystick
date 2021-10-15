@@ -218,7 +218,8 @@ var speed1 = 0xFF;
       if(x>0 && Math.abs(y)>0.15){
         console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
           motor1 = Math.floor(Math.abs(y)*2*maxspeed);
-          motor2 = Math.floor(motor1/Math.abs(x*maxspeed*.25));
+          motor2 = Math.floor(motor1-Math.abs(motor2*x*0.1));
+          //motor2 = Math.floor(motor1/Math.abs(x*maxspeed*.25));
           motor1 = motor1.toString(16);
           motor1 = "0x" + motor1;
           motor2 = motor2.toString(16);
@@ -235,23 +236,24 @@ var speed1 = 0xFF;
     }else if(x<=0 && Math.abs(y)>0.15){
       console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
         motor2 = Math.floor(Math.abs(y)*2*maxspeed);
-        motor1 = Math.floor(motor2/Math.abs(x*maxspeed*.25));
+        motor1 = Math.floor(motor1-Math.abs(motor2*x*.1));
+        //motor1 = Math.floor(motor2/Math.abs(x*maxspeed*.25));
         motor2 = motor2.toString(16);
         motor2 = "0x" + motor2;
         motor1 = motor1.toString(16);
         motor1 = "0x" + motor1;
       }else if(Math.abs(y)<=0.15 && x>0){
         console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
-        motor2 = Math.floor(Math.abs(x)*2*maxspeed);
-        motor1 = motor2;
-        m2fw = true;
-        m1fw = false;
-      }else if(Math.abs(y)<=0.15 && x<=0){
-        console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
         motor1 = Math.floor(Math.abs(x)*2*maxspeed);
         motor2 = motor1;
-        m1fw = true;
         m2fw = false;
+        m1fw = true;
+      }else if(Math.abs(y)<=0.15 && x<=0){
+        console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
+        motor2 = Math.floor(Math.abs(x)*2*maxspeed);
+        motor1 = motor2;
+        m1fw = false;
+        m2fw = true;
       }
 
 
