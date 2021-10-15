@@ -161,7 +161,7 @@ var speed1 = 0xFF;
   const cubeMove = ( x, y,cubeno) => {
       const cube = gCubes[cubeno];
       var buf = new Uint8Array([ 0x01, 0x01, 0x01, 0x64, 0x02, 0x01, 0x64]);
-      let maxspeed = 125;
+      let maxspeed = 100;
       let stopmot = 0;
       //stop the motors prior to doing the math on them
       if(x==0 && y!=0){
@@ -213,14 +213,18 @@ var speed1 = 0xFF;
       // console.log(y);
       // y = "0x" + y;
 
+
+
       if(x>0 && y!=0){
         console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
-        motor1 = Math.floor(Math.abs(y)*2*maxspeed);
-        motor2 = Math.floor(motor1/Math.abs(x*maxspeed*.25));
-        motor1 = motor1.toString(16);
-        motor1 = "0x" + motor1;
-        motor2 = motor2.toString(16);
-        motor2 = "0x" + motor2;
+          motor1 = Math.floor(Math.abs(y)*2*maxspeed);
+          motor2 = Math.floor(motor1/Math.abs(x*maxspeed*.25));
+          motor1 = motor1.toString(16);
+          motor1 = "0x" + motor1;
+          motor2 = motor2.toString(16);
+          motor2 = "0x" + motor2;
+
+
       }else if(x==0 && y!=0){
 
     console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
