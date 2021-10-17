@@ -67,7 +67,7 @@ var speed1 = 0xFF;
           if( cube === gCubes[0] ){
             turnOnLightCian( cube );
             spinCube( cube );
-            enableMoveButtons();
+            //enableMoveButtons();
           }else if( cube === gCubes[1] ){
             turnOnLightGreen( cube );
           }else{
@@ -163,26 +163,28 @@ var speed1 = 0xFF;
       var buf = new Uint8Array([ 0x01, 0x01, 0x01, 0x64, 0x02, 0x01, 0x64]);
       let maxspeed = 100;
       let stopmot = 0;
-      //stop the motors prior to doing the math on them
-      if(x==0 && y!=0){
-        stopmot =1;
-        motor2 = motor2-0.5;
-        motor1=0;
-      }else if(y==0 && x!=0){
-        stopmot=2;
-        x = x-0.5;
-        y = 0;
-      }else if(y==0 && x==0){
-        stopmot=3;
-        x = 0;
-        y = 0;
-      }else{
-      x = x-0.5;
-      y = y-0.5;
-    }
 
-    console.log("x: "+x);
-    console.log("y: "+y);
+
+          console.log("x: "+x);
+          console.log("y: "+y);
+
+      //stop the motors prior to doing the math on them
+    //   if(x==0 && y!=0){
+    //     stopmot =1;
+    //     motor2 = motor2;
+    //     motor1=0;
+    //   }else if(y==0 && x!=0){
+    //     stopmot=2;
+    //     x = x;
+    //     y = 0;
+    //   }else if(y==0 && x==0){
+    //     stopmot=3;
+    //     x = 0;
+    //     y = 0;
+    //   }else{
+    //   x = x;
+    //   y = y;
+    // }
 
     //calculate whether the motor should go forward or backward.
     //motor speeds are encoded as -.5 to .5 so if it's over 0 then it should go forward.
@@ -221,8 +223,8 @@ var speed1 = 0xFF;
 
 
       if(x>0 && Math.abs(y)>0.07){
-        console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
-          motor1 = Math.floor(Math.abs(y)*2*maxspeed);
+        console.log(Math.floor(Math.abs(x)*maxspeed),Math.floor(Math.abs(y)*maxspeed));
+          motor1 = Math.floor(Math.abs(y)*maxspeed);
           motor2 = Math.floor(motor1-Math.abs(motor1*x));
           //motor2 = Math.floor(motor1/Math.abs(x*maxspeed*.25));
           motor1 = motor1.toString(16);
@@ -233,14 +235,14 @@ var speed1 = 0xFF;
 
       }else if(x==0 && Math.abs(y)>0.07){
 
-    console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
-          motor1 = Math.floor(Math.abs(y)*2*maxspeed);
+    console.log(Math.floor(Math.abs(x)*maxspeed),Math.floor(Math.abs(y)*maxspeed));
+          motor1 = Math.floor(Math.abs(y)*maxspeed);
       motor1 = motor1.toString(16);
       motor1 = "0x" + motor1;
       motor2 = motor1;
     }else if(x<=0 && Math.abs(y)>0.07){
-      console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
-        motor2 = Math.floor(Math.abs(y)*2*maxspeed);
+      console.log(Math.floor(Math.abs(x)*maxspeed),Math.floor(Math.abs(y)*maxspeed));
+        motor2 = Math.floor(Math.abs(y)*maxspeed);
         motor1 = Math.floor(motor2-Math.abs(motor2*x));
         //motor1 = Math.floor(motor2/Math.abs(x*maxspeed*.25));
         motor2 = motor2.toString(16);
@@ -248,14 +250,14 @@ var speed1 = 0xFF;
         motor1 = motor1.toString(16);
         motor1 = "0x" + motor1;
       }else if(Math.abs(y)<=0.07 && x>0){
-        console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
-        motor1 = Math.floor(Math.abs(x)*2*maxspeed);
+        console.log(Math.floor(Math.abs(x)*maxspeed),Math.floor(Math.abs(y)*maxspeed));
+        motor1 = Math.floor(Math.abs(x)*maxspeed*0.2);
         motor2 = motor1;
         m2fw = false;
         m1fw = true;
       }else if(Math.abs(y)<=0.07 && x<=0){
-        console.log(Math.floor(Math.abs(x)*2*maxspeed),Math.floor(Math.abs(y)*2*maxspeed));
-        motor2 = Math.floor(Math.abs(x)*2*maxspeed);
+        console.log(Math.floor(Math.abs(x)*maxspeed),Math.floor(Math.abs(y)*maxspeed));
+        motor2 = Math.floor(Math.abs(x)*maxspeed*0.2);
         motor1 = motor2;
         m1fw = false;
         m2fw = true;
@@ -308,81 +310,86 @@ var speed1 = 0xFF;
 
 
 //joystick stuff
-marginTop = 100;
-mousedown = false;
-centerx = 175;
-centery = 175;
 
-  document.getElementById('joystick-base').style.marginTop += marginTop;
-
-document.getElementById("joystick-shaft").addEventListener("mousedown", function(){moveStick(true)});
-document.getElementById("joystick-base").addEventListener("mousemove", function(){moveStick(mousedown)});
-document.getElementsByTagName("html")[0].addEventListener("mouseup", function(){moveStick(false)});
-document.getElementsByTagName("html")[0].addEventListener("mousemove", function(){moveStick(mousedown)});
-document.getElementById("joystick-shaft").addEventListener("touchstart", function(){moveStick(true)});
-document.getElementById("joystick-base").addEventListener("touchmove", function(){moveStick(mousedown)});
-document.getElementsByTagName("html")[0].addEventListener("touchend", function(){moveStick(false)});
-document.getElementsByTagName("html")[0].addEventListener("touchmove", function(){moveStick(mousedown)});
-
-
-let xmap;
-let ymap;
-function moveStick(mouse){
-  mousedown = mouse;
+//margin at top of joystick
+// marginTop = 100;
+// mousedown = false;
+// //center of joystick
+// centerx = 175;
+// centery = 175;
+// //diameter of joystick shaft
+// joystickshaft = 150;
+// //diameter of joystick base
+// joystickbase = 300;
+// let inside = true;
+//
+//   document.getElementById('joystick-base').style.marginTop += marginTop;
 
 
 
 
-
-  //console.log(mouse);
-  if(mouse==true){
-    // console.log(event.pageY);
-    // console.log(event.pageX);
-
-    //calculate if the cursor is in the circle
-    if(Math.pow((event.pageY - (175+marginTop)), 2)+ Math.pow((event.pageX - 175),2) < Math.pow(50,2)){
-      document.getElementById('joystick-shaft').style.top = event.pageY-(125+marginTop);
-        document.getElementById('joystick-shaft').style.left = event.pageX-125;
-        ymap = (event.pageY-(100+marginTop))/150;
-        xmap = (event.pageX-100)/150;
-
-        // console.log((event.pageY-100)/150);
-        // console.log((event.pageX-100)/150);
-        //document.getElementsByTagName("body")[0].style.backgroundColor = "rgb(" + 0 + "," + 255*xmap + "," + 255*ymap + ")";
-      }else{
-        console.log("outside circle");
-        let adjangle = Math.atan((Math.abs(event.pageY - (175+marginTop))/Math.abs(event.pageX - (175))));
-        if(event.pageY>=(175+marginTop)){
-         ymap = Math.sin(adjangle)*50+50;
-      }else {
-        ymap = -Math.sin(adjangle)*50+50;
-      }
-      if(event.pageX>=175){;
-        xmap = Math.cos(adjangle)*50+50;
-     }else{
-       xmap = -Math.cos(adjangle)*50+50;
-     }
-     document.getElementById('joystick-shaft').style.top = ymap;
-     document.getElementById('joystick-shaft').style.left = xmap;
-     ymap = ymap/100;
-     xmap = xmap/100;
-     }
-
-     // console.log(ymap);
-     // console.log(xmap);
+let xmap = outx;
+let ymap = outy;
 
 
-      }
-    else{
-        ymap = 0;
-        xmap = 0;
-        document.getElementById('joystick-shaft').style.top = 50;
-        document.getElementById('joystick-shaft').style.left = 50;
 
-    }
-          //  document.getElementsByTagName("body")[0].style.backgroundColor = "rgb(" + 0 + "," + 255*xmap + "," + 255*ymap + ")";
-
-}
+// function moveStick(mouse){
+//   mousedown = mouse;
+//  // console.log("touchstart");
+//  // console.log(incirc);
+//
+//
+//
+//   //console.log(mouse);
+//   if(mouse==true){
+//     // console.log(event.pageY);
+//     // console.log(event.pageX);
+//
+//     //calculate if the cursor is in the circle
+//   //  if(Math.pow((event.pageY - (175+marginTop)), 2)+ Math.pow((event.pageX - 175),2) < Math.pow(50,2)){
+//    if(inside ==true){
+//       document.getElementById('joystick-shaft').style.top = event.pageY-(125+marginTop);
+//         document.getElementById('joystick-shaft').style.left = event.pageX-125;
+//         ymap = (event.pageY-(100+marginTop))/150;
+//         xmap = (event.pageX-100)/150;
+//
+//         // console.log((event.pageY-100)/150);
+//         // console.log((event.pageX-100)/150);
+//         //document.getElementsByTagName("body")[0].style.backgroundColor = "rgb(" + 0 + "," + 255*xmap + "," + 255*ymap + ")";
+//       }else{
+//         //console.log("outside circle");
+//         let adjangle = Math.atan((Math.abs(event.pageY - (175+marginTop))/Math.abs(event.pageX - (175))));
+//         if(event.pageY>=(175+marginTop)){
+//          ymap = Math.sin(adjangle)*50+50;
+//       }else {
+//         ymap = -Math.sin(adjangle)*50+50;
+//       }
+//       if(event.pageX>=175){;
+//         xmap = Math.cos(adjangle)*50+50;
+//      }else{
+//        xmap = -Math.cos(adjangle)*50+50;
+//      }
+//      document.getElementById('joystick-shaft').style.top = ymap;
+//      document.getElementById('joystick-shaft').style.left = xmap;
+//      ymap = ymap/100;
+//      xmap = xmap/100;
+//      }
+//
+//      // console.log(ymap);
+//      // console.log(xmap);
+//
+//
+//       }
+//     else{
+//         ymap = 0;
+//         xmap = 0;
+//         document.getElementById('joystick-shaft').style.top = 75;
+//         document.getElementById('joystick-shaft').style.left = 75;
+//
+//     }
+//           //  document.getElementsByTagName("body")[0].style.backgroundColor = "rgb(" + 0 + "," + 255*xmap + "," + 255*ymap + ")";
+//
+// }
 
 let timeron = true;
 let timer = 0;
@@ -399,6 +406,8 @@ let ypos = 0;
 
 function addTime(){
 
+  console.log("x: " + outx);
+  console.log("y: " + outy);
 
   if(timer<5){
     timer++;
@@ -409,10 +418,11 @@ function addTime(){
   addTime();
 
   if(gCubes[0]!=undefined){
-    if(xmap!=xpos || ymap!=ypos){
-      cubeMove(xmap, ymap, 0);
-      xpos = xmap;
-      ypos = ymap;
+    if(xpos!=outx || ypos!=outy){
+      cubeMove(outx, outy, 0);
+      xpos = outx;
+      ypos = outy;
+
     }
 
 }

@@ -1,17 +1,25 @@
 <head>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+<meta charset="utf-8" />
 </head>
 <body>
 
     <h2 id="connecttocube">Connect to Toio Core Cube</h2>
     <div class="operationContent">
       <button class="mui-btn mui-btn--small mui-btn--primary mui-btn--raised" id="btConnectCube1">Connect Cube 1</button>
-      <button class="mui-btn mui-btn--small mui-btn--primary mui-btn--raised" disabled id="btConnectCube2">Connect Cube 2</button>
+      <button class="mui-btn mui-btn--small mui-btn--primary mui-btn--raised" disabled id="btConnectCube2" style="visibility:hidden">Connect Cube 2</button>
       <button class="mui-btn mui-btn--small mui-btn--primary mui-btn--raised" disabled id="btConnectCube3" style="visibility:hidden">Connect Cube 3</button>
     </div>
-<div id="joystick-base">
+    <div id="canvas">
+<!-- <div id="joystick-base" >
     <div id="joystick-shaft"></div>
+</div> -->
 </div>
 
+<script type="text/javascript" src="joystick.js"></script>
 <script type="text/javascript" src="index.js"></script>
+
 </body>

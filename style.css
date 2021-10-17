@@ -1,6 +1,6 @@
 #joystick-base {
-  height: 150px;
-  width: 150px;
+  height: 300px;
+  width: 300px;
   background-color: #dbdbdb;
   border-radius: 50%;
   margin-top: 0px;
@@ -10,15 +10,15 @@
 }
 
 #joystick-shaft{
-  height: 50px;
-  width:50px;
-  max-width: 50px;
+  height: 150px;
+  width:150px;
+  max-width: 150px;
   border-radius: 50%;
   background-color: #666;
   position: absolute;
   /* top and left are half of joystick base top and left less the height/width of joystick shaft */
-  top: 50px;
-  left: 50px;
+  top: 75px;
+  left: 75px;
   margin:0;
 }
 
@@ -31,4 +31,9 @@ button{
 
 h1{
   margin-top: 30px;
+}
+
+body{
+  margin-top: 100px;
+  margin-left: 100px;
 }
